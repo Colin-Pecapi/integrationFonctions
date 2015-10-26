@@ -1,5 +1,5 @@
 /**
- * Fonctions de densité de probabilité
+ * Fonctions de densité de probabilité et  fonction de répartition
  * Loi normal 
  * Loi normal centrée réduite (loi de gausse)
  * Loi du khi deux
