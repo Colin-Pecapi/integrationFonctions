@@ -20,9 +20,10 @@ public class Fonctions {
 	*/
 	public float loi_de_gausse(valeur_X)
 	{
-		//float y ;
-		//y = (1 / racine(2*math.factorial()))*exp(-(1/2)*x^2)
-		//retourne y
+		float y ;
+		//y = (1 / sqrt(2*PI()))*exp(-(1/2)*x^2)
+		y = (1 / Math.sqrt(2*Math.PI()))*Math.exp(-(1/2)*x*x);
+		return y;
 	}
 
 	/**
@@ -37,19 +38,24 @@ public class Fonctions {
 	*/
 	public float[] loi_normal(float moyenne, float phi, float echantillonage, float x_min, float x_max )
 	{
-
 		//f_de_x est un tableau de 2 dimensions, contenant la valeur de x en premiere case et la valeur de y en deuxieme case
 		//f_de_x est un tableau représentant la fonction de répartition de la variable x
 		//taille = (x_max - x_min)/echantillonage +1
-		//float f_de_x[taille][2]
-		//int i = 0 ;
+		int taille = (x_max - x_min)/echantillonage +1
+		float f_de_x[taille]
+		int i = 0 ;
 		//Pour valeur allant de x_min a x_max par pas de echantillonage
+		For (i= 0 ; i <= taille ; i ++){
+			//valeur = i*echantillonage + x_min;
+			valeur = i*echantillonage + x_min;
 			//X = ( valeur - moyenne ) / phi ;
-			//f_de_x[i][0] = valeur
-			//f_de_x[i][1] = loi_de_gausse(X)
-			//i++;
+			X = ( valeur - moyenne ) / phi ;
+			//f_de_x[i] = loi_de_gausse(X)
+			f_de_x[i] = loi_de_gausse(X)
+		}
 		//Fin pour
 		//retourne f_de_x
+		return f_de_x
 	}
 
 	/**
@@ -63,19 +69,23 @@ public class Fonctions {
 	*/
 	public float[] loi_du_khi_deux(int k, float echantillonage, float x_min, float x_max )
 	{
-
 		//f_de_x est un tableau de 2 dimensions, contenant la valeur de x en premiere case et la valeur de y en deuxieme case
 		//f_de_x est un tableau représentant la fonction de répartition de la variable x
 		//taille = (x_max - x_min)/echantillonage +1
-		//float f_de_x[taille][2]
-		
+		//float f_de_x[taille]
+		float f_de_x[taille];
+		int i = 0 ;
 		//float gamma = fonction_gamma(k/2)
-		//int i = 0 ;
-		//Pour x allant de x_min a x_max par pas de echantillonage
-			//f_de_x[i][0] = valeur
-			//f_de_x[i][1] = (1 / ())*
+		float gamma = fonction_gamma(k/2);
+		int i = 0 ;
+		//Pour valeur allant de x_min a x_max par pas de echantillonage
+		For (i= 0 ; i <= taille ; i ++){
+			//x = i*echantillonage + x_min;
+			x = i*echantillonage + x_min;
+			// f_de_x[i] = (1 / ((gamma)gamma*2^(n/2)))*x^((n/2)-1)*Math.exp(-x/2);
+			f_de_x[i] = (1 / ((gamma)gamma*2^(n/2)))*x^((n/2)-1)*Math.exp(-x/2);
 		//Fin pour
-		//retourne f_de_x
+		return f_de_x
 	}
 	/**
 	* @in x
@@ -85,41 +95,57 @@ public class Fonctions {
 	{
 		//La fonction gamma(x) peut etre approché par la fonction factoriel x-1 si x est un entier positif
 		//float y
-		//y = math.factorial(x - 1)
-		//sinon, et dans tous les cas :
-		//y = math.intégral(t^(x-1)*math.exponentiel(-t),t,0,10^10)
-		
-		//retourne y
+		y = factoriel(x - 1);
+		return y
 	}
 
-		/*
+	/**
+	* @in x
+	* @out y int factoriel de x
+	*/
+	public static int factoriel( int x ) {
+        // Il faut être sur que x est positif
+		if (x < 0) throw{
+           return -1;
+		}       
+		int factoriel = 1;
+        // Boucle de calcul de la factoriel
+		for(int i = 2; i <= x; i++)
+		{			
+            factoriel *= i;               
+        }
+		return factoriel;
+    }
+	
+	
+	/*
 	Exemple de retour f_de_x
 	pour f(x) = x^2
 	pour x = [-2;1]
 	avec un échantillonage de 0.5
 	
 	taille = (1 - -2)/0.5 +1= 7
-	float f_de_x[taille][2]
+	float f_de_x[taille]
 	
-	f_de_x[0][0]= -2
-	f_de_x[0][1]= 4
+	-2 =0*0.5+(-2)
+	f_de_x[0]= 4
 	
-	f_de_x[1][0]= -1.5
-	f_de_x[1][1]= 2.25
+	-1.5 =1*0.5+(-2)
+	f_de_x[1]= 2.25
 	
-	f_de_x[2][0]= -1
-	f_de_x[2][1]= 1
+	-1 =2*0.5+(-2)
+	f_de_x[2]= 1
 	
-	f_de_x[3][0]= -0.5
-	f_de_x[3][1]= 0.25
+	-0.5 =3*0.5+(-2)
+	f_de_x[3]= 0.25
 	
-	f_de_x[4][0]= 0
-	f_de_x[4][1]= 0
+	0 =4*0.5+(-2)
+	f_de_x[4]= 0
+
+	0.5 =5*0.5+(-2)
+	f_de_x[5]= 0.25
 	
-	f_de_x[5][0]= -0.5
-	f_de_x[5][1]= 0.25
-	
-	f_de_x[6][0]= 1
-	f_de_x[6][1]= 1
+	1 =6*0.5+(-2)
+	f_de_x[6]= 1
 	*/
 }
